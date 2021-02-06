@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
+
+root_path="$(pwd)"
+project_name="${root_path##*/}"
+version="${1:-latest}"
+image="bkuhlmann/alpine-ruby:$version"
+
+if [[ -z "$version" ]]; then
+  printf "%s\n" "ERROR: Version must be supplied."
+  exit 1
+fi
+
+docker tag "${project_name}_server" "$image"
+docker push "$image"

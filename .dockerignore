@@ -1,0 +1,12 @@
+# Git
+.git
+.gitignore
+
+#Logs
+log/*
+
+# Temp
+tmp/*
+
+# CTags
+tags

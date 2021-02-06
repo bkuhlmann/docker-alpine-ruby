@@ -1,0 +1,139 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+= Docker Alpine Ruby
+
+[link=https://circleci.com/gh/bkuhlmann/docker-alpine-ruby]
+image::https://circleci.com/gh/bkuhlmann/docker-alpine-ruby.svg?style=svg[Circle CI Status]
+
+Provides a Docker Ruby image with up-to-date Vim, GPG, and Git tooling generally needed for build
+purposes.
+
+toc::[]
+
+== Features
+
+- Installs GPG, Git, Vim, and Bash.
+- Sets Vim as default editor.
+- Defaults to xterm terminal.
+- Sets default Git branch.
+- Installs latest Ruby system gems.
+
+== Requirements
+
+. link:https://www.docker.com[Docker].
+
+== Setup
+
+To set up the project, run:
+
+[source,bash]
+----
+git clone https://github.com/bkuhlmann/docker-alpine-ruby.git
+cd docker-alpine-ruby
+git checkout 0.1.0
+----
+
+== Usage
+
+All versions of this image can be found on
+link:https://hub.docker.com/repository/docker/bkuhlmann/alpine-ruby[Docker Hub]. The image can be
+pulled as follows:
+
+[source,bash]
+----
+docker pull bkuhlmann/alpine-ruby:latest  # <= Pull latest version.
+docker pull bkuhlmann/alpine-ruby:0.1.0   # <= Pull specific version.
+----
+
+You can also build on top of this image via your `Dockerfile`:
+
+[source,dockerfile]
+----
+FROM bkuhlmann/alpine-ruby:latest  # <= Latest version.
+FROM bkuhlmann/alpine-ruby:0.1.0   # <= Specific version.
+----
+
+== Development
+
+To contribute, run:
+
+[source,bash]
+----
+git clone https://github.com/bkuhlmann/docker-alpine-ruby.git
+cd docker-alpine-ruby
+----
+
+To build, run:
+
+[source,bash]
+----
+bin/build
+----
+
+To use the console, run:
+
+[source,bash]
+----
+bin/console
+----
+
+To release a new version (i.e. `1.2.3`), run:
+
+[source,bash]
+----
+bin/release 1.2.3
+----
+
+Releasing without specifying a version will default to tagging the image as the `latest` image. Best
+practice is to release both the specific tag and update the latest tag as well. Example:
+
+[source,bash]
+----
+bin/release
+bin/release 1.2.3
+----
+
+== Tests
+
+To test, run:
+
+[source,bash]
+----
+bin/console
+ruby --version
+gpg --version
+git --version
+vim --version
+----
+
+== Versioning
+
+Read link:https://semver.org[Semantic Versioning] for details. Briefly, it means:
+
+* Major (X.y.z) - Incremented for any backwards incompatible public API changes.
+* Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
+* Patch (x.y.Z) - Incremented for small, backwards compatible, bug fixes.
+
+== Code of Conduct
+
+Please note that this project is released with a link:CODE_OF_CONDUCT.adoc[CODE OF CONDUCT]. By
+participating in this project you agree to abide by its terms.
+
+== Contributions
+
+Read link:CONTRIBUTING.adoc[CONTRIBUTING] for details.
+
+== License
+
+Read link:LICENSE.adoc[LICENSE] for details.
+
+== History
+
+Read link:CHANGES.adoc[CHANGES] for details.
+Built with link:https://www.alchemists.io/projects/rubysmith[Rubysmith].
+
+== Credits
+
+Engineered by link:https://www.alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].

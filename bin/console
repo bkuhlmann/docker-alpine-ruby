@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
+
+root_path="$(pwd)"
+project_name="${root_path##*/}"
+
+docker run --disable-content-trust --interactive --tty --rm "${project_name}_server" bash
