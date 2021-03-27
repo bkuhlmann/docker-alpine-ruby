@@ -1,26 +1,123 @@
-FROM ruby:3.0.0-alpine3.13
+FROM bkuhlmann/alpine-base:0.1.0
 
-LABEL description="Alpine Ruby"
+LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="brooke@alchemists.io"
 
-RUN apk update && \
-    apk upgrade --available && \
-    apk add --no-cache build-base \
-                       postgresql-dev \
-                       bash \
-                       curl \
-                       git \
-                       gnupg \
-                       openssl \
-                       tzdata && \
-    apk add --no-cache --update bash
+RUN apk add --no-cache \
+            gmp-dev \
+            postgresql-dev \
+            tzdata
 
-ENV EDITOR=vim
-ENV TERM=xterm
+RUN set -o nounset && \
+    set -o errexit && \
+    set -o pipefail && \
+    IFS=$'\n\t' && \
+    mkdir -p /usr/local/etc && \
+    printf "%s\n" "install: --no-document" > /usr/local/etc/gemrc && \
+    printf "%s\n" "update: --no-document" >> /usr/local/etc/gemrc
+
+ENV LANG C.UTF-8
+ENV RUBY_MAJOR 3.0
+ENV RUBY_VERSION 3.0.0
+ENV RUBY_DOWNLOAD_SHA256 68bfaeef027b6ccd0032504a68ae69721a70e97d921ff328c0c8836c798f6cb1
+
+# Dependencies:
+# - https://bugs.ruby-lang.org/issues/11869
+# - https://github.com/docker-library/ruby/issues/75
+# Thread Patch:
+# - https://github.com/docker-library/ruby/issues/196
+# - https://bugs.ruby-lang.org/issues/14387#note-13 (patch source)
+# - https://bugs.ruby-lang.org/issues/14387#note-16 (breaks glibc which doesn't matter here)
+RUN set -o nounset && \
+    set -o errexit && \
+    set -o pipefail && \
+    IFS=$'\n\t' && \
+    apk add --no-cache \
+            --virtual .ruby-build-dependencies \
+            autoconf \
+            bison \
+            bzip2 \
+            bzip2-dev \
+            coreutils \
+            dpkg-dev dpkg \
+            gcc \
+            gdbm-dev \
+            glib-dev \
+            libc-dev \
+            libffi-dev \
+            libxml2-dev \
+            libxslt-dev \
+            linux-headers \
+            make \
+            ncurses-dev \
+            openssl-dev \
+            patch \
+            procps \
+            readline-dev \
+            ruby \
+            tar \
+            xz \
+            yaml-dev \
+            zlib-dev && \
+    wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" && \
+    echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum --check --strict && \
+    mkdir -p /usr/src/ruby && \
+    tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1 && \
+    rm ruby.tar.xz && \
+    cd /usr/src/ruby && \
+    wget -O 'thread-stack-fix.patch' 'https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch' && \
+    echo '3ab628a51d92fdf0d2b5835e93564857aea73e0c1de00313864a94a6255cb645 *thread-stack-fix.patch' | sha256sum --check --strict && \
+    patch -p1 -i thread-stack-fix.patch && \
+    rm thread-stack-fix.patch && \
+    # hack in "ENABLE_PATH_CHECK" disabling to suppress warning: Insecure world writable dir
+    echo '#define ENABLE_PATH_CHECK 0' > file.c.new && \
+    echo >> file.c.new && \
+    cat file.c >> file.c.new && \
+    mv file.c.new file.c && \
+    autoconf && \
+    gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" && \
+    # The configure script does not detect isnan/isinf as macros.
+    export ac_cv_func_isnan=yes ac_cv_func_isinf=yes && \
+    ./configure --build="$gnuArch" \
+                --disable-install-doc \
+                --enable-shared && \
+    make -j "$(nproc)" && \
+    make install && \
+    runDeps="$( \
+      scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
+      | tr ',' '\n' \
+      | sort -u \
+      | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+    )" && \
+    apk add --no-network \
+            --virtual .ruby-run-dependencies \
+            $runDeps \
+            bzip2 \
+            libffi-dev \
+            procps \
+            yaml-dev \
+            zlib-dev && \
+    apk del --no-network .ruby-build-dependencies && \
+    cd / && \
+    rm -r /usr/src/ruby && \
+    ! apk --no-network list \
+          --installed \
+          | grep -v '^[.]ruby-run-dependencies' \
+          | grep -i ruby && \
+    [ "$(command -v ruby)" = '/usr/local/bin/ruby' ] && \
+    ruby --version && \
+    gem --version && \
+    bundle --version
+
+ENV GEM_HOME /usr/local/bundle
+ENV BUNDLE_SILENCE_ROOT_WARNING=1
+ENV BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV BUNDLE_JOBS=3
 ENV BUNDLE_RETRY=3
+ENV PATH $GEM_HOME/bin:$PATH
 
-RUN git config --global init.defaultBranch master
+RUN mkdir -p "$GEM_HOME" && \
+    chmod 777 "$GEM_HOME"
 RUN gem update --system
 
 WORKDIR /usr/src/app
