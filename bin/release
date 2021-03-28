@@ -5,15 +5,9 @@ set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
-root_path="$(pwd)"
-project_name="${root_path##*/}"
+source "lib/utilities.sh"
+
 version="${1:-latest}"
-image="bkuhlmann/alpine-ruby:$version"
 
-if [[ -z "$version" ]]; then
-  printf "%s\n" "ERROR: Version must be supplied."
-  exit 1
-fi
-
-docker tag "${project_name}_server" "$image"
-docker push "$image"
+docker build --platform linux/amd64,linux/arm64 --tag "$(tag $version)" --push .
+noti --title "Alchemists Docker Released: $(project):$version"

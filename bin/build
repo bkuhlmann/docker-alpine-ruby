@@ -5,4 +5,9 @@ set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
-docker-compose build
+source "lib/utilities.sh"
+
+version="${1:-latest}"
+
+docker build --load --tag "$(tag $version)" .
+noti --title "Alchemists Docker Built: $(project)"

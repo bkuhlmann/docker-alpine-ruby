@@ -5,7 +5,6 @@ set -o errexit
 set -o pipefail
 IFS=$'\n\t'
 
-root_path="$(pwd)"
-project_name="${root_path##*/}"
+source "lib/utilities.sh"
 
-docker run --disable-content-trust --interactive --tty --rm "${project_name}_server" bash
+docker run --disable-content-trust --pull never --interactive --tty --rm "$(image)" bash
