@@ -1,5 +1,11 @@
 = Changes
 
+== 0.2.0 (2021-03-28)
+
+* Added base image and custom Ruby build - Brooke Kuhlmann
+* Updated shell scripts to support multiple platforms - Brooke Kuhlmann
+* Removed Docker Compose YAML - Brooke Kuhlmann
+
 == 0.1.0 (2021-02-13)
 
 * Added initial implementation.

@@ -14,11 +14,8 @@ toc::[]
 
 == Features
 
-- Installs GPG, Git, Vim, and Bash.
-- Sets Vim as default editor.
-- Defaults to xterm terminal.
-- Sets default Git branch.
-- Installs latest Ruby system gems.
+* Installs link:https://www.ruby-lang.org[Ruby].
+* Updates link:https://rubygems.org[RubyGems].
 
 == Requirements
 
@@ -32,7 +29,7 @@ To set up the project, run:
 ----
 git clone https://github.com/bkuhlmann/docker-alpine-ruby.git
 cd docker-alpine-ruby
-git checkout 0.1.0
+git checkout 0.2.0
 ----
 
 == Usage
@@ -44,7 +41,7 @@ pulled as follows:
 [source,bash]
 ----
 docker pull bkuhlmann/alpine-ruby:latest  # <= Pull latest version.
-docker pull bkuhlmann/alpine-ruby:0.1.0   # <= Pull specific version.
+docker pull bkuhlmann/alpine-ruby:0.2.0   # <= Pull specific version.
 ----
 
 You can also build on top of this image via your `Dockerfile`:
@@ -52,7 +49,7 @@ You can also build on top of this image via your `Dockerfile`:
 [source,dockerfile]
 ----
 FROM bkuhlmann/alpine-ruby:latest  # <= Latest version.
-FROM bkuhlmann/alpine-ruby:0.1.0   # <= Specific version.
+FROM bkuhlmann/alpine-ruby:0.2.0   # <= Specific version.
 ----
 
 == Development
@@ -103,9 +100,6 @@ To test, run:
 ----
 bin/console
 ruby --version
-gpg --version
-git --version
-vim --version
 ----
 
 == Versioning
