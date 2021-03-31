@@ -17,9 +17,8 @@ RUN set -o nounset && \
     printf "%s\n" "update: --no-document" >> /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
-ENV RUBY_MAJOR 3.0
-ENV RUBY_VERSION 3.0.0
-ENV RUBY_DOWNLOAD_SHA256 68bfaeef027b6ccd0032504a68ae69721a70e97d921ff328c0c8836c798f6cb1
+ENV IMAGE_RUBY_VERSION 3.0.0
+ENV IMAGE_RUBY_SHA 68bfaeef027b6ccd0032504a68ae69721a70e97d921ff328c0c8836c798f6cb1
 
 # Dependencies:
 # - https://bugs.ruby-lang.org/issues/11869
@@ -59,10 +58,10 @@ RUN set -o nounset && \
             xz \
             yaml-dev \
             zlib-dev && \
-    wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" && \
-    echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum --check --strict && \
+    wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${IMAGE_RUBY_VERSION::-2}/ruby-$IMAGE_RUBY_VERSION.tar.xz" && \
+    echo "$IMAGE_RUBY_SHA *ruby.tar.xz" | sha256sum --check --strict && \
     mkdir -p /usr/src/ruby && \
-    tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1 && \
+    tar -xJf ruby.tar.xz --directory /usr/src/ruby --strip-components=1 && \
     rm ruby.tar.xz && \
     cd /usr/src/ruby && \
     wget -O 'thread-stack-fix.patch' 'https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch' && \
