@@ -9,5 +9,5 @@ source "lib/utilities.sh"
 
 version="${1:-latest}"
 
-docker build --platform linux/amd64,linux/arm64 --tag "$(tag $version)" --push .
+docker build --platform linux/arm64,linux/amd64 --tag "$(tag $version)" --push .
 noti --title "Alchemists Docker Released: $(project):$version"
