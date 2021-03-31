@@ -1,4 +1,4 @@
-FROM bkuhlmann/alpine-base:0.1.0
+FROM bkuhlmann/alpine-base:0.1.1
 
 LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="brooke@alchemists.io"
