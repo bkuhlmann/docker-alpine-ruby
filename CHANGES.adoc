@@ -1,5 +1,11 @@
 = Changes
 
+== 0.2.1 (2021-03-31)
+
+* Updated release script platform order - Brooke Kuhlmann
+* Updated to Docker Alpine Base - Brooke Kuhlmann
+* Refactored Dockerfile implementation - Brooke Kuhlmann
+
 == 0.2.0 (2021-03-28)
 
 * Added base image and custom Ruby build - Brooke Kuhlmann
