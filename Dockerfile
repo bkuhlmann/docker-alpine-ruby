@@ -13,8 +13,7 @@ RUN set -o nounset \
     && set -o pipefail \
     && IFS=$'\n\t' \
     && mkdir -p /usr/local/etc \
-    && printf "%s\n" "install: --no-document" > /usr/local/etc/gemrc \
-    && printf "%s\n" "update: --no-document" >> /usr/local/etc/gemrc
+    && printf "%s\n" "gem: --no-document" > /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
 ENV IMAGE_RUBY_VERSION 3.0.0
