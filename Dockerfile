@@ -4,9 +4,13 @@ LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="brooke@alchemists.io"
 
 RUN apk add --no-cache \
+            gcc \
             gmp-dev \
+            libc-dev \
+            make \
             postgresql-dev \
-            tzdata
+            tzdata \
+            yaml
 
 RUN set -o nounset \
     && set -o errexit \
