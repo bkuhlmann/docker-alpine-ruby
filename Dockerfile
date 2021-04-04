@@ -20,7 +20,7 @@ RUN set -o nounset \
     && printf "%s\n" "gem: --no-document" > /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
-ENV IMAGE_RUBY_VERSION 3.0.0
+ENV RUBY_VERSION 3.0.0
 ENV IMAGE_RUBY_SHA 68bfaeef027b6ccd0032504a68ae69721a70e97d921ff328c0c8836c798f6cb1
 
 # Dependencies:
@@ -61,7 +61,7 @@ RUN set -o nounset \
                xz \
                yaml-dev \
                zlib-dev \
-    && wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${IMAGE_RUBY_VERSION::-2}/ruby-$IMAGE_RUBY_VERSION.tar.xz" \
+    && wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz" \
     && echo "$IMAGE_RUBY_SHA *ruby.tar.xz" | sha256sum --check --strict \
     && mkdir -p /usr/src/ruby \
     && tar -xJf ruby.tar.xz --directory /usr/src/ruby --strip-components=1 \
