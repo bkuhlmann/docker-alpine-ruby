@@ -1,5 +1,13 @@
 = Changes
 
+== 0.3.0 (2021-04-04)
+
+* Fixed Ruby version environment variable - Brooke Kuhlmann
+* Added gcc, libc-dev, make, and yaml libraries - Brooke Kuhlmann
+* Updated gemrc generation - Brooke Kuhlmann
+* Updated to Docker Alpine Base 0.2.0 - Brooke Kuhlmann
+* Refactored Dockerfile chained commands - Brooke Kuhlmann
+
 == 0.2.1 (2021-03-31)
 
 * Updated release script platform order - Brooke Kuhlmann
