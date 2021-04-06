@@ -1,5 +1,9 @@
 = Changes
 
+== 0.3.1 (2021-04-05)
+
+* Updated to Ruby 3.0.1 - Brooke Kuhlmann
+
 == 0.3.0 (2021-04-04)
 
 * Fixed Ruby version environment variable - Brooke Kuhlmann
