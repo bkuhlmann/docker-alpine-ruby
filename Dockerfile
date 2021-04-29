@@ -83,7 +83,7 @@ RUN set -o nounset \
     && ./configure --build="$gnuArch" \
                    --disable-install-doc \
                    --enable-shared \
-    && make -j "$(nproc)" \
+    && make --jobs="$(nproc)" \
     && make install \
     && runDeps="$( \
          scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
