@@ -4,6 +4,7 @@ LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="brooke@alchemists.io"
 
 RUN apk add --no-cache \
+            g++ \
             gcc \
             gmp-dev \
             libc-dev \
