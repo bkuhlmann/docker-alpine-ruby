@@ -1,5 +1,11 @@
 = Changes
 
+== 0.5.0 (2021-06-16)
+
+* Added Milestoner gem - Brooke Kuhlmann
+* Added repository tagging to release script - Brooke Kuhlmann
+* Updated to Docker Alpine Base 0.4.0 - Brooke Kuhlmann
+
 == 0.4.0 (2021-06-07)
 
 * Added g++ package - Brooke Kuhlmann
