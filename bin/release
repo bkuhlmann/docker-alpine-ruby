@@ -8,6 +8,12 @@ IFS=$'\n\t'
 source "lib/utilities.sh"
 
 version="${1:-latest}"
+version_pattern="^[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$"
 
 docker build --platform linux/arm64,linux/amd64 --tag "$(tag $version)" --push .
+
+if [[ "$version" =~ $version_pattern ]]; then
+  milestoner --publish "$version"
+fi
+
 noti --title "Alchemists Docker Released: $(project):$version"
