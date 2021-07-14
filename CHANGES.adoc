@@ -1,5 +1,12 @@
 = Changes
 
+== 0.5.1 (2021-07-13)
+
+* Fixed Ruby 3.0.2 image SHA - Brooke Kuhlmann
+* Updated to Docker Alpine Base 0.4.1 - Brooke Kuhlmann
+* Updated to Ruby 3.0.2 - Brooke Kuhlmann
+* Removed unnecessary runtime dependencies - Brooke Kuhlmann
+
 == 0.5.0 (2021-06-16)
 
 * Added Milestoner gem - Brooke Kuhlmann
