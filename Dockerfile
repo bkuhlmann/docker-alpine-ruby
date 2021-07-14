@@ -95,11 +95,6 @@ RUN set -o nounset \
     && apk add --no-network \
                --virtual .ruby-run-dependencies \
                $runDeps \
-               bzip2 \
-               libffi-dev \
-               procps \
-               yaml-dev \
-               zlib-dev \
     && apk del --no-network .ruby-build-dependencies \
     && cd / \
     && rm -r /usr/src/ruby \
