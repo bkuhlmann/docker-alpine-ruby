@@ -7,13 +7,13 @@
 [link=https://circleci.com/gh/bkuhlmann/docker-alpine-ruby]
 image::https://circleci.com/gh/bkuhlmann/docker-alpine-ruby.svg?style=svg[Circle CI Status]
 
-Provides a Docker Ruby image with up-to-date Vim, GPG, and Git tooling generally needed for build
-purposes.
+Provides a Ruby focused Docker image with current tooling for development purposes.
 
 toc::[]
 
 == Features
 
+* Uses the link:https://www.alchemists.io/projects/docker-alpine-base[Docker Alpine Base] image.
 * Installs link:https://www.ruby-lang.org[Ruby].
 * Updates link:https://rubygems.org[RubyGems].
 
