@@ -1,5 +1,11 @@
 = Changes
 
+== 0.6.0 (2021-10-24)
+
+* Updated README project description - Brooke Kuhlmann
+* Updated to Docker Alpline Base 0.5.0 - Brooke Kuhlmann
+* Removed notes from pull request template - Brooke Kuhlmann
+
 == 0.5.4 (2021-08-27)
 
 * Updated to Docker Alpine Base 0.4.4 - Brooke Kuhlmann
