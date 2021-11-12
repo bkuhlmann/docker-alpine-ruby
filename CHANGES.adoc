@@ -1,5 +1,10 @@
 = Changes
 
+== 0.6.2 (2021-11-12)
+
+* Added README community link - Brooke Kuhlmann
+* Updated to Docker Alpine Base 0.5.2 - Brooke Kuhlmann
+
 == 0.6.1 (2021-10-29)
 
 * Updated to Docker Alpine Base 0.5.1 - Brooke Kuhlmann
