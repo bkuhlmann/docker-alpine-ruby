@@ -1,5 +1,10 @@
 = Changes
 
+== 0.8.0 (2021-11-24)
+
+* Updated GitHub issue template - Brooke Kuhlmann
+* Updated to Docker Alpine Base 0.7.0 - Brooke Kuhlmann
+
 == 0.7.0 (2021-11-24)
 
 * Fixed Hippocratic license structure - Brooke Kuhlmann
