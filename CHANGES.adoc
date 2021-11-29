@@ -1,5 +1,10 @@
 = Changes
 
+== 0.8.1 (2021-11-29)
+
+* Updated citation version - Brooke Kuhlmann
+* Updated to Docker Alpine Base 0.7.1 - Brooke Kuhlmann
+
 == 0.8.0 (2021-11-24)
 
 * Updated GitHub issue template - Brooke Kuhlmann
