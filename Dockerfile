@@ -36,10 +36,13 @@ ENV IMAGE_RUBY_SHA 88cc7f0f021f15c4cd62b1f922e3a401697f7943551fe45b1fdf4f2417a17
 # - https://bugs.ruby-lang.org/issues/14387#note-13 (patch source)
 # - https://bugs.ruby-lang.org/issues/14387#note-16 (breaks glibc which doesn't matter here)
 RUN <<STEPS
+  # Defaults
   set -o nounset
   set -o errexit
   set -o pipefail
   IFS=$'\n\t'
+
+  # Setup
   apk add --no-cache \
           --virtual .ruby-build-dependencies \
           autoconf \
@@ -67,28 +70,35 @@ RUN <<STEPS
           xz \
           yaml-dev \
           zlib-dev
+
+  # Download
   wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz"
   echo "$IMAGE_RUBY_SHA *ruby.tar.xz" | sha256sum --check --strict
   mkdir -p /usr/src/ruby
   tar -xJf ruby.tar.xz --directory /usr/src/ruby --strip-components=1
   rm ruby.tar.xz
+
+  # Patch
   cd /usr/src/ruby
   wget -O 'thread-stack-fix.patch' 'https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch'
   echo '3ab628a51d92fdf0d2b5835e93564857aea73e0c1de00313864a94a6255cb645 *thread-stack-fix.patch' | sha256sum --check --strict
   patch -p1 -i thread-stack-fix.patch
   rm thread-stack-fix.patch
-  # hack in "ENABLE_PATH_CHECK" disabling to suppress warning: Insecure world writable dir
+
+  # Fix: "ENABLE_PATH_CHECK" is disabled to suppress warning: Insecure world writable dir
   echo '#define ENABLE_PATH_CHECK 0' > file.c.new
   echo >> file.c.new
   cat file.c >> file.c.new
   mv file.c.new file.c
+
   autoconf
   gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
-  # The configure script does not detect isnan/isinf as macros.
+
+  # Fix: The configure script does not detect isnan/isinf as macros.
   export ac_cv_func_isnan=yes ac_cv_func_isinf=yes
-  ./configure --build="$gnuArch" \
-              --disable-install-doc \
-              --enable-shared
+
+  # Build
+  ./configure --build="$gnuArch" --disable-install-doc --enable-shared
   make --jobs="$(nproc)"
   make install
   runDeps="$( \
@@ -101,6 +111,8 @@ RUN <<STEPS
           --virtual .ruby-run-dependencies \
           $runDeps
   apk del --no-network .ruby-build-dependencies
+
+  # Clean
   cd /
   rm -r /usr/src/ruby
   ! apk --no-network list \
@@ -108,6 +120,8 @@ RUN <<STEPS
         | grep -v '^[.]ruby-run-dependencies' \
         | grep -i ruby
   [ "$(command -v ruby)" = '/usr/local/bin/ruby' ]
+
+  # Test
   ruby --version
   gem --version
   bundle --version
