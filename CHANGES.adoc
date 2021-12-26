@@ -1,5 +1,11 @@
 = Changes
 
+== 1.0.0 (2021-12-26)
+
+* Added step documentation - Brooke Kuhlmann
+* Updated to Docker Alpine Base 1.0.0 - Brooke Kuhlmann
+* Updated to Ruby 3.1.0 - Brooke Kuhlmann
+
 == 0.8.1 (2021-11-29)
 
 * Updated citation version - Brooke Kuhlmann
