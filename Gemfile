@@ -2,6 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "git-lint", "~> 2.0"
+gem "git-lint", "~> 3.0"
 gem "milestoner", "~> 12.0"
 gem "rake", "~> 13.0"
