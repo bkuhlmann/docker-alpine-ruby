@@ -1,5 +1,9 @@
 = Versions
 
+== 1.1.1 (2022-01-30)
+
+* Updated to Docker Alpine Base 1.1.1 - Brooke Kuhlmann
+
 == 1.1.0 (2022-01-25)
 
 * Added Ruby version to Gemfile - Brooke Kuhlmann
