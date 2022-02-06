@@ -4,9 +4,6 @@
 
 = Docker Alpine Ruby
 
-[link=https://circleci.com/gh/bkuhlmann/docker-alpine-ruby]
-image::https://circleci.com/gh/bkuhlmann/docker-alpine-ruby.svg?style=svg[Circle CI Status]
-
 Provides a Ruby focused Docker image with current tooling for development purposes. Great for
 local development and/or continuous integration builds using the most up-to-date tooling.
 
