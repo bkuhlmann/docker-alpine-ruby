@@ -1,5 +1,9 @@
 = Versions
 
+== 1.1.7 (2022-04-05)
+
+* Updated to Docker Alpine Base 1.1.6 - Brooke Kuhlmann
+
 == 1.1.6 (2022-03-29)
 
 * Updated to Docker Alpine Base 1.1.5 - Brooke Kuhlmann
