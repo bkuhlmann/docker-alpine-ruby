@@ -1,5 +1,11 @@
 = Versions
 
+== 1.2.0 (2022-04-23)
+
+* Updated to Caliber 0.6.0 - Brooke Kuhlmann
+* Updated to Caliber 0.7.0 - Brooke Kuhlmann
+* Updated to Docker Alpine Base 1.2.0 - Brooke Kuhlmann
+
 == 1.1.8 (2022-04-12)
 
 * Added GitHub sponsorship configuration - Brooke Kuhlmann
