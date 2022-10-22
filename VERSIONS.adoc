@@ -1,5 +1,11 @@
 = Versions
 
+== 1.4.1 (2022-10-22)
+
+* Updated to Caliber 0.16.0 - Brooke Kuhlmann
+* Updated to Docker Alpine Base 1.4.1 - Brooke Kuhlmann
+* Updated to Milestoner 14.5.0 - Brooke Kuhlmann
+
 == 1.4.0 (2022-10-03)
 
 * Updated to Docker Alpine Base 1.4.0 - Brooke Kuhlmann
