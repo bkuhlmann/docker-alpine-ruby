@@ -10,7 +10,7 @@ source "lib/utilities.sh"
 version="${1:-latest}"
 
 if docker build --load --tag "$(tag "$version")" .; then
-  noti --title "Alchemists build ready: $(project)"
+  noti --title "Build build finished: $(project)"
 else
-  noti --title "Alchemists build failed: $(project)"
+  noti --title "Build build failed: $(project)"
 fi
