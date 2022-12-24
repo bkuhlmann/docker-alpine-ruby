@@ -12,7 +12,7 @@ toc::[]
 == Features
 
 * Uses the link:https://www.alchemists.io/projects/docker-alpine-base[Docker Alpine Base] image.
-* Installs link:https://www.ruby-lang.org[Ruby].
+* Installs link:https://www.ruby-lang.org[Ruby] with link:https://speed.yjit.org[YJIT].
 * Updates link:https://rubygems.org[RubyGems].
 
 == Requirements

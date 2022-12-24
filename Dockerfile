@@ -25,8 +25,8 @@ RUN <<STEPS
 STEPS
 
 ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.1.3
-ENV IMAGE_RUBY_SHA 4ee161939826bcdfdafa757cf8e293a7f14e357f62be7144f040335cc8c7371a
+ENV RUBY_VERSION 3.2.0
+ENV IMAGE_RUBY_SHA d2f4577306e6dd932259693233141e5c3ec13622c95b75996541b8d5b68b28b4
 
 # Dependencies:
 # - https://bugs.ruby-lang.org/issues/11869
@@ -66,6 +66,7 @@ RUN <<STEPS
           procps \
           readline-dev \
           ruby \
+          rust \
           tar \
           xz \
           yaml-dev \
@@ -98,7 +99,7 @@ RUN <<STEPS
   export ac_cv_func_isnan=yes ac_cv_func_isinf=yes
 
   # Build
-  ./configure --build="$gnuArch" --disable-install-doc --enable-shared
+  ./configure --build="$gnuArch" --disable-install-doc --enable-yjit --enable-shared
   make --jobs="$(nproc)"
   make install
   runDeps="$( \
