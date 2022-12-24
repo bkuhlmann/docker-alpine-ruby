@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
+
+source "lib/utilities.sh"
+
+version="${1:-latest}"
+version_pattern="^[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$"
+
+if docker build --platform linux/arm64,linux/amd64 --tag "$(tag "$version")" --push .; then
+  if [[ "$version" =~ $version_pattern ]]; then
+    milestoner --publish "$version"
+  fi
+
+  noti --title "Docker image deployed: $(project):$version"
+else
+  noti --title "Docker image deploy failed: $(project):$version"
+fi

@@ -74,20 +74,19 @@ To use the console, run:
 bin/console
 ----
 
-To release a new version (i.e. `1.2.3`), run:
+To deploy a new version (i.e. `1.2.3`), run:
 
 [source,bash]
 ----
-bin/release 1.2.3
+bin/deploy 1.2.3
 ----
 
-Releasing without specifying a version will default to tagging the image as the `latest` image. Best
-practice is to release both the specific tag and update the latest tag as well. Example:
+Deploying, without specifying a version, will default to tagging the image as `latest`. Best practice is to deploy both the latest version and specific tag. Example:
 
 [source,bash]
 ----
-bin/release
-bin/release 1.2.3
+bin/deploy
+bin/deploy 1.2.3
 ----
 
 == Tests
