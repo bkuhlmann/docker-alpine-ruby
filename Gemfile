@@ -6,5 +6,5 @@ source "https://rubygems.org"
 
 gem "caliber", "~> 0.21"
 # gem "git-lint", "~> 4.0"
-gem "milestoner", "~> 14.5"
+gem "milestoner", "~> 15.0"
 gem "rake", "~> 13.0"
