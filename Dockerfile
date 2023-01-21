@@ -12,6 +12,7 @@ RUN apk add --no-cache \
             libc-dev \
             make \
             postgresql-dev \
+            postgresql-client \
             tzdata \
             yaml
 
