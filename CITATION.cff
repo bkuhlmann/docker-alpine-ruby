@@ -14,5 +14,5 @@ keywords:
  - docker
  - ruby
  - development
-repository-code: https://www.alchemists.io/projects/docker-alpine-ruby
-repository-artifact: https://www.alchemists.io/projects/docker-alpine-ruby
+repository-code: https://alchemists.io/projects/docker-alpine-ruby
+repository-artifact: https://alchemists.io/projects/docker-alpine-ruby
