@@ -1,5 +1,10 @@
 = Versions
 
+== 2.2.0 (2023-03-13)
+
+* Updated site URLs to use bare domain - Brooke Kuhlmann
+* Updated to Docker Alpine Base 2.1.0 - Brooke Kuhlmann
+
 == 2.1.1 (2023-02-14)
 
 * Updated to Docker Alpine Base 2.0.4 - Brooke Kuhlmann
