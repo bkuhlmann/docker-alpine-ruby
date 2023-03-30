@@ -1,5 +1,9 @@
 = Versions
 
+== 2.2.2 (2023-03-30)
+
+Updated to Ruby 3.2.2 - Brooke Kuhlmann
+
 == 2.2.1 (2023-03-29)
 
 Updated to Docker Alpine Base 2.1.1 - Brooke Kuhlmann
