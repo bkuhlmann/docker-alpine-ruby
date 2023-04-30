@@ -1,5 +1,12 @@
 = Versions
 
+== 2.2.3 (2023-04-30)
+
+* Added Ruby environment option for deprecation warnings - Brooke Kuhlmann
+* Updated to Caliber 0.30.0 - Brooke Kuhlmann
+* Updated to Docker Alpine Base 2.1.2 - Brooke Kuhlmann
+* Updated to Milestoner 15.3.0 - Brooke Kuhlmann
+
 == 2.2.2 (2023-03-30)
 
 Updated to Ruby 3.2.2 - Brooke Kuhlmann
