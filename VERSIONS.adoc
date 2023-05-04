@@ -1,5 +1,9 @@
 = Versions
 
+== 2.3.0 (2023-05-10)
+
+Updated to Docker Alpine Base 2.2.0 - Brooke Kuhlmann
+
 == 2.2.3 (2023-04-30)
 
 * Added Ruby environment option for deprecation warnings - Brooke Kuhlmann
