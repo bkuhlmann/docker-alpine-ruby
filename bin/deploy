@@ -10,7 +10,7 @@ source "lib/utilities.sh"
 version="${1:-latest}"
 version_pattern="^[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$"
 
-if docker build --platform linux/arm64,linux/amd64 --tag "$(tag "$version")" --push .; then
+if docker buildx build --platform linux/arm64,linux/amd64 --tag "$(tag "$version")" --push .; then
   if [[ "$version" =~ $version_pattern ]]; then
     milestoner --publish "$version"
   fi
