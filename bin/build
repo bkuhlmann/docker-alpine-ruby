@@ -9,7 +9,7 @@ source "lib/utilities.sh"
 
 version="${1:-latest}"
 
-if docker build --load --tag "$(tag "$version")" .; then
+if docker buildx build --load --tag "$(tag "$version")" .; then
   noti --title "Build build finished: $(project)"
 else
   noti --title "Build build failed: $(project)"
