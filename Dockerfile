@@ -14,6 +14,7 @@ RUN apk add --no-cache \
             postgresql-dev \
             postgresql-client \
             tzdata \
+            yaml-dev \
             yaml
 
 RUN <<STEPS
@@ -70,7 +71,6 @@ RUN <<STEPS
           rust \
           tar \
           xz \
-          yaml-dev \
           zlib-dev
 
   # Download
