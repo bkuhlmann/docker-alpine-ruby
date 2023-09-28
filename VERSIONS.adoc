@@ -1,5 +1,11 @@
 = Versions
 
+== 2.5.1 (2023-09-28)
+
+* Added YAML dev package - Brooke Kuhlmann
+* Added lib-ffi package - Brooke Kuhlmann
+* Updated to Docker Alpine Base 2.4.1 - Brooke Kuhlmann
+
 == 2.5.0 (2023-08-21)
 
 * Fixed build script to use buildx - Brooke Kuhlmann
