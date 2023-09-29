@@ -10,6 +10,7 @@ RUN apk add --no-cache \
             gcc \
             gmp-dev \
             libc-dev \
+            libffi-dev \
             make \
             postgresql-dev \
             postgresql-client \
