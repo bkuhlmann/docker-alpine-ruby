@@ -1,5 +1,10 @@
 = Versions
 
+== 2.7.0 (2023-12-07)
+
+* Updated Circle CI step names - Brooke Kuhlmann
+* Updated to Docker Alpine base 2.6.0 - Brooke Kuhlmann
+
 == 2.6.1 (2023-12-01)
 
 * Added Rakefile quality task - Brooke Kuhlmann
