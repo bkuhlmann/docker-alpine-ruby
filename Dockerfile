@@ -28,8 +28,8 @@ RUN <<STEPS
 STEPS
 
 ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.2.2
-ENV IMAGE_RUBY_SHA 4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23
+ENV RUBY_VERSION 3.3.0
+ENV IMAGE_RUBY_SHA 676b65a36e637e90f982b57b059189b3276b9045034dcd186a7e9078847b975b
 
 # Dependencies:
 # - https://bugs.ruby-lang.org/issues/11869
@@ -49,7 +49,6 @@ RUN <<STEPS
   apk add --no-cache \
           --virtual .ruby-build-dependencies \
           autoconf \
-          bison \
           bzip2 \
           bzip2-dev \
           coreutils \
@@ -67,12 +66,31 @@ RUN <<STEPS
           openssl-dev \
           patch \
           procps \
-          readline-dev \
           ruby \
           rust \
           tar \
           xz \
           zlib-dev
+
+  # Rust
+  rustArch=
+  apkArch="$(apk --print-arch)"
+  case "$apkArch" in
+    'x86_64') rustArch='x86_64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/x86_64-unknown-linux-musl/rustup-init'; rustupSha256='7aa9e2a380a9958fc1fc426a3323209b2c86181c6816640979580f62ff7d48d4';;
+    'aarch64') rustArch='aarch64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/aarch64-unknown-linux-musl/rustup-init'; rustupSha256='b1962dfc18e1fd47d01341e6897cace67cddfabf547ef394e8883939bd6e002e';;
+  esac;
+
+  if [ -n "$rustArch" ]; then
+    mkdir -p /tmp/rust
+    wget -O /tmp/rust/rustup-init "$rustupUrl"
+    echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict
+    chmod +x /tmp/rust/rustup-init
+    export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'
+    export PATH="$CARGO_HOME/bin:$PATH"
+    /tmp/rust/rustup-init -y --no-modify-path --profile minimal --default-toolchain '1.74.1' --default-host "$rustArch"
+    rustc --version
+    cargo --version
+  fi;
 
   # Download
   wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz"
@@ -101,9 +119,10 @@ RUN <<STEPS
   export ac_cv_func_isnan=yes ac_cv_func_isinf=yes
 
   # Build
-  ./configure --build="$gnuArch" --disable-install-doc --enable-yjit --enable-shared
+  ./configure --build="$gnuArch" --disable-install-doc --enable-shared ${rustArch:+--enable-yjit}
   make --jobs="$(nproc)"
   make install
+  rm -rf /tmp/rust
   runDeps="$( \
     scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
     | tr ',' '\n' \
