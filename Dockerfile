@@ -18,14 +18,7 @@ RUN apk add --no-cache \
             yaml-dev \
             yaml
 
-RUN <<STEPS
-  set -o nounset
-  set -o errexit
-  set -o pipefail
-  IFS=$'\n\t'
-  mkdir -p /usr/local/etc
-  printf "%s\n" "gem: --no-document" > /usr/local/etc/gemrc
-STEPS
+COPY lib/templates/gemrc.tt /usr/local/etc/gemrc
 
 ENV LANG C.UTF-8
 ENV RUBY_VERSION 3.3.0
