@@ -1,5 +1,14 @@
 = Versions
 
+== 3.0.0 (2023-12-27)
+
+* Added IRB configuration - Brooke Kuhlmann
+* Updated Circle CI Rake step name - Brooke Kuhlmann
+* Updated Ruby options environment variable - Brooke Kuhlmann
+* Updated to Ruby 3.3.0 - Brooke Kuhlmann
+* Refactored RubyGems configuration to template - Brooke Kuhlmann
+* Refactored environment and copy instructions - Brooke Kuhlmann
+
 == 2.7.0 (2023-12-07)
 
 * Updated Circle CI step names - Brooke Kuhlmann
