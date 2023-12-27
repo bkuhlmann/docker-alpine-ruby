@@ -1,0 +1,10 @@
+#! /usr/bin/env ruby
+# frozen_string_literal: true
+
+require "irb/completion"
+
+Reline::Face.config :completion_dialog do |config|
+  config.define :default, foreground: :white, background: :black
+  config.define :enhanced, foreground: :black, background: :green
+  config.define :scrollbar, foreground: :bright_white, background: :black
+end

@@ -30,6 +30,9 @@ STEPS
 ENV LANG C.UTF-8
 ENV RUBY_VERSION 3.3.0
 ENV IMAGE_RUBY_SHA 676b65a36e637e90f982b57b059189b3276b9045034dcd186a7e9078847b975b
+ENV IRBRC /usr/local/etc/irbrc
+
+COPY lib/templates/irbrc.tt /usr/local/etc/irbrc
 
 # Dependencies:
 # - https://bugs.ruby-lang.org/issues/11869
