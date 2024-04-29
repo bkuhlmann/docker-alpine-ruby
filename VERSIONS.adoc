@@ -1,5 +1,9 @@
 = Versions
 
+== 3.4.0 (2024-04-29)
+
+* 🔼 Updated to Docker Alpine Base 3.3.0 - Brooke Kuhlmann
+
 == 3.3.0 (2024-04-23)
 
 * 🔼 Updated RuboCop to use XDG local configuration - Brooke Kuhlmann
