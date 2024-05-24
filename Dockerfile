@@ -150,7 +150,7 @@ ENV BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV BUNDLE_JOBS=3
 ENV BUNDLE_RETRY=3
 ENV PATH $GEM_HOME/bin:$PATH
-ENV RUBYOPT="-W:deprecated -W:performance --yjit"
+ENV RUBYOPT="-W:deprecated -W:performance --yjit --debug-frozen-string-literal"
 
 RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
 RUN gem update --system
