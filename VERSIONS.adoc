@@ -1,5 +1,10 @@
 = Versions
 
+== 3.7.0 (2024-06-01)
+
+* 🔼 Updated to Docker Alpine Base 3.6.0 - Brooke Kuhlmann
+* 🔼 Updated to Milestoner 17.9.0 - Brooke Kuhlmann
+
 == 3.6.0 (2024-05-30)
 
 * 🟢 Added Ruby debug frozen string literal option - Brooke Kuhlmann
