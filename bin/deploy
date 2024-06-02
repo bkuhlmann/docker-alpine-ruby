@@ -7,11 +7,20 @@ IFS=$'\n\t'
 
 source "lib/utilities.sh"
 
-version="${1:-latest}"
-version_pattern="^[[:digit:]]+.[[:digit:]]+.[[:digit:]]+$"
+flag="${1:-''}"
+version="latest"
+
+if [[ "$flag" == 'p' ]]; then
+  version="$(milestoner --next)"
+fi
+
+if [[ "$version" == "0.0.0" ]]; then
+  printf "%s\n" "There's been no activity since last deploy."
+  exit 1
+fi
 
 if docker buildx build --platform linux/arm64,linux/amd64 --tag "$(tag "$version")" --push .; then
-  if [[ "$version" =~ $version_pattern ]]; then
+  if [[ "$version" != "latest" ]]; then
     milestoner --publish "$version"
   fi
 
