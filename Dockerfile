@@ -6,8 +6,8 @@ LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="brooke@alchemists.io"
 
 ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.2
-ENV IMAGE_RUBY_SHA b5e8a8ed4a47cdd9a3358b5bdd998c37bd9e971ca63766a37d5ae5933fdb69f1
+ENV RUBY_VERSION 3.3.3
+ENV IMAGE_RUBY_SHA 83c0995388399c9555bad87e70af069755b5a9d84bbaa74aa22d1e37ff70fc1e
 ENV IRBRC /usr/local/etc/irbrc
 
 COPY lib/templates/gemrc.tt /usr/local/etc/gemrc
