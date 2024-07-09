@@ -1,5 +1,11 @@
 = Versions
 
+== 3.10.0 (2024-07-09)
+
+* 🔼 Updated to Git Lint 8.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Milestoner 18.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.4 - Brooke Kuhlmann
+
 == 3.9.0 (2024-06-20)
 
 * 🔼 Updated deploy script to automatically calculate version - Brooke Kuhlmann
