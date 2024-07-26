@@ -2,6 +2,8 @@
 :toclevels: 5
 :figure-caption!:
 
+:milestoner_link: link:https://alchemists.io/projects/milestoner[Milestoner]
+
 = Docker Alpine Ruby
 
 Provides a Ruby focused Docker image with current tooling for development purposes. Great for
@@ -74,20 +76,32 @@ To use the console, run:
 bin/console
 ----
 
-To deploy a new version (i.e. `1.2.3`), run:
-
-[source,bash]
-----
-bin/deploy 1.2.3
-----
-
-Deploying, without specifying a version, will default to tagging the image as `latest`. Best practice is to deploy both the latest version and specific tag. Example:
+To deploy the _latest_ version, run:
 
 [source,bash]
 ----
 bin/deploy
-bin/deploy 1.2.3
 ----
+
+To automatically calculate the next logical version and deploy it, run:
+
+[source,bash]
+----
+bin/deploy p
+----
+
+Versions are calculated and created via the {milestoner_link} gem. Best practice is to deploy both the latest version and next version. Example:
+
+[source,bash]
+----
+bin/deploy
+bin/deploy p
+----
+
+The above will ensure new images are created with the following tags:
+
+* `latest`: This is the most recent stable version which may or may not be ahead of the last version released.
+* `<major>.<minor>.<patch>`: This the next logical version as calculated and created by {milestoner_link}.
 
 == Tests
 
