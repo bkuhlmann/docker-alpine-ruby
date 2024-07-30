@@ -29,7 +29,7 @@ To set up the project, run:
 ----
 git clone https://github.com/bkuhlmann/docker-alpine-ruby.git
 cd docker-alpine-ruby
-git checkout 3.11.0
+git checkout 3.12.0
 ----
 
 == Usage
@@ -41,7 +41,7 @@ pulled as follows:
 [source,bash]
 ----
 docker pull bkuhlmann/alpine-ruby:latest  # <= Pull latest version.
-docker pull bkuhlmann/alpine-ruby:3.11.0   # <= Pull specific version.
+docker pull bkuhlmann/alpine-ruby:3.12.0   # <= Pull specific version.
 ----
 
 You can also build on top of this image via your `Dockerfile`:
@@ -49,7 +49,7 @@ You can also build on top of this image via your `Dockerfile`:
 [source,dockerfile]
 ----
 FROM bkuhlmann/alpine-ruby:latest  # <= Latest version.
-FROM bkuhlmann/alpine-ruby:3.11.0   # <= Specific version.
+FROM bkuhlmann/alpine-ruby:3.12.0   # <= Specific version.
 ----
 
 == Development
