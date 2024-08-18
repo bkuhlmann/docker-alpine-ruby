@@ -3,7 +3,7 @@
 FROM bkuhlmann/alpine-base:3.9.0
 
 LABEL description="Alchemists Alpine Ruby"
-LABEL maintainer="brooke@alchemists.io"
+LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
 
 ENV LANG C.UTF-8
 ENV RUBY_VERSION 3.3.4
