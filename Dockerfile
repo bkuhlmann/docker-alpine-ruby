@@ -5,10 +5,10 @@ FROM bkuhlmann/alpine-base:3.10.0
 LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
 
-ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.4
-ENV IMAGE_RUBY_SHA 1caaee9a5a6befef54bab67da68ace8d985e4fb59cd17ce23c28d9ab04f4ddad
-ENV IRBRC /usr/local/etc/irbrc
+ENV LANG=C.UTF-8
+ENV RUBY_VERSION=3.3.4
+ENV IMAGE_RUBY_SHA=1caaee9a5a6befef54bab67da68ace8d985e4fb59cd17ce23c28d9ab04f4ddad
+ENV IRBRC=/usr/local/etc/irbrc
 
 COPY lib/templates/gemrc.tt /usr/local/etc/gemrc
 COPY lib/templates/irbrc.tt /usr/local/etc/irbrc
@@ -144,12 +144,12 @@ RUN <<STEPS
   bundle --version
 STEPS
 
-ENV GEM_HOME /usr/local/bundle
+ENV GEM_HOME="/usr/local/bundle"
 ENV BUNDLE_SILENCE_ROOT_WARNING=1
 ENV BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV BUNDLE_JOBS=3
 ENV BUNDLE_RETRY=3
-ENV PATH $GEM_HOME/bin:$PATH
+ENV PATH="$GEM_HOME/bin:$PATH"
 ENV RUBYOPT="-W:deprecated -W:performance --yjit --debug-frozen-string-literal"
 
 RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
