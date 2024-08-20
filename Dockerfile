@@ -5,9 +5,10 @@ FROM bkuhlmann/alpine-base:3.10.0
 LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
 
+ARG RUBY_VERSION=3.3.4
+ARG RUBY_SHA=1caaee9a5a6befef54bab67da68ace8d985e4fb59cd17ce23c28d9ab04f4ddad
+
 ENV LANG=C.UTF-8
-ENV RUBY_VERSION=3.3.4
-ENV IMAGE_RUBY_SHA=1caaee9a5a6befef54bab67da68ace8d985e4fb59cd17ce23c28d9ab04f4ddad
 ENV IRBRC=/usr/local/etc/irbrc
 
 COPY lib/templates/gemrc.tt /usr/local/etc/gemrc
@@ -89,7 +90,7 @@ RUN <<STEPS
 
   # Download
   wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz"
-  echo "$IMAGE_RUBY_SHA *ruby.tar.xz" | sha256sum --check --strict
+  echo "$RUBY_SHA *ruby.tar.xz" | sha256sum --check --strict
   mkdir -p /usr/src/ruby
   tar -xJf ruby.tar.xz --directory /usr/src/ruby --strip-components=1
   rm ruby.tar.xz
