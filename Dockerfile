@@ -20,6 +20,7 @@ RUN apk add --no-cache \
             gmp-dev \
             libc-dev \
             libffi-dev \
+            jemalloc \
             make \
             postgresql-dev \
             postgresql-client \
@@ -152,6 +153,7 @@ ENV BUNDLE_JOBS=3
 ENV BUNDLE_RETRY=3
 ENV PATH="$GEM_HOME/bin:$PATH"
 ENV RUBYOPT="-W:deprecated -W:performance --yjit --debug-frozen-string-literal"
+ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
 RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
 RUN gem update --system
