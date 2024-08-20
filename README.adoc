@@ -2,11 +2,14 @@
 :toclevels: 5
 :figure-caption!:
 
+:jemalloc_link: link:https://jemalloc.net[jemalloc]
 :milestoner_link: link:https://alchemists.io/projects/milestoner[Milestoner]
+:ruby_link: link:https://www.ruby-lang.org[Ruby]
+:yjit_link: link:https://speed.yjit.org[YJIT]
 
 = Docker Alpine Ruby
 
-Provides a Ruby focused Docker image with current tooling for development purposes. Great for
+Provides a {ruby_link} focused Docker image with current tooling for development purposes. Great for
 local development and/or continuous integration builds using the most up-to-date tooling.
 
 toc::[]
@@ -14,7 +17,8 @@ toc::[]
 == Features
 
 * Uses the link:https://alchemists.io/projects/docker-alpine-base[Docker Alpine Base] image.
-* Installs link:https://www.ruby-lang.org[Ruby] with link:https://speed.yjit.org[YJIT].
+* Installs {jemalloc_link}.
+* Installs {ruby_link} with {yjit_link}.
 * Updates link:https://rubygems.org[RubyGems].
 
 == Requirements
@@ -35,8 +39,7 @@ git checkout 3.12.0
 == Usage
 
 All versions of this image can be found on
-link:https://hub.docker.com/repository/docker/bkuhlmann/alpine-ruby[Docker Hub]. The image can be
-pulled as follows:
+link:https://hub.docker.com/r/bkuhlmann/alpine-ruby/tags[Docker Hub]. The image can be pulled as follows:
 
 [source,bash]
 ----
@@ -51,6 +54,12 @@ You can also build on top of this image via your `Dockerfile`:
 FROM bkuhlmann/alpine-ruby:latest  # <= Latest version.
 FROM bkuhlmann/alpine-ruby:3.12.0   # <= Specific version.
 ----
+
+The following configuration is used when building Ruby:
+
+* `--build="$gnuArch"`: Enables cross compilation by ensuring {ruby_link} is built for a GNU architecture regardless of the current machine used to build Ruby.
+* `--disable-install-doc`: Prevents the installationg of documentation in order to keep the image small.
+* `--enable-shared ${rustArch:+--enable-yjit}`: Checks the `rustArch` environment variable is set and enables {yjit_link}. Otherwise, YJIT is disabled.
 
 == Development
 
