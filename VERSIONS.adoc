@@ -1,5 +1,22 @@
 = Versions
 
+== 3.14.0 (2024-09-07)
+
+* 🔼 Updated to Docker Alpine Base 3.11.0 - Brooke Kuhlmann
+* 🔼 Updated to Milestoner 8.4.0 - Brooke Kuhlmann
+
+== 3.13.0 (2024-09-03)
+
+* ✅ Fixed Dockerfile environment statements to use delimiter - Brooke Kuhlmann
+* ✅ Fixed Dockerfile maintainer name - Brooke Kuhlmann
+* 🟢 Added README Developer Certificate of Origin documentation - Brooke Kuhlmann
+* 🟢 Added jemalloc - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🔼 Updated to Docker Alpine Base 3.10.0 - Brooke Kuhlmann
+* 🔼 Updated to Dockerfile syntax 1.4.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.5 - Brooke Kuhlmann
+* 🔁 Refactored Ruby version and SHA as arguments - Brooke Kuhlmann
+
 == 3.12.0 (2024-07-29)
 
 * 🔼 Updated documentation to explain automatic versioning - Brooke Kuhlmann
