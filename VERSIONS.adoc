@@ -1,5 +1,12 @@
 = Versions
 
+== 3.17.0 (2024-11-19)
+
+* 🔼 Updated to Caliber 0.64.0 - Brooke Kuhlmann
+* 🔼 Updated to Docker Alpine Base 3.13.0 - Brooke Kuhlmann
+* 🔼 Updated to Git Lint 8.7.0 - Brooke Kuhlmann
+* 🔼 Updated to Milestoner 18.10.0 - Brooke Kuhlmann
+
 == 3.16.0 (2024-11-05)
 
 * 🔼 Updated to Milestoner 18.9.0 - Brooke Kuhlmann
