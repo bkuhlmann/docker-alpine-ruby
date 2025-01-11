@@ -1,5 +1,9 @@
 = Versions
 
+== 4.1.0 (2025-01-10)
+
+* 🔼 Updated to Docker Alpine Base 3.16.0 - Brooke Kuhlmann
+
 == 4.0.1 (2025-01-07)
 
 * 🟢 🔼 Updated to Debug 1.10.0 - Brooke Kuhlmann
