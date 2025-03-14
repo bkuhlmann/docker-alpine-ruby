@@ -24,6 +24,7 @@ RUN apk add --no-cache \
             make \
             postgresql-dev \
             postgresql-client \
+            sqlite \
             tzdata \
             yaml-dev \
             yaml
