@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-FROM bkuhlmann/alpine-base:3.23.0
+FROM bkuhlmann/alpine-base:3.24.0
 
 LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
