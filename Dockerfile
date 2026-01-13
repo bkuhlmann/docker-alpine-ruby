@@ -5,8 +5,8 @@ FROM bkuhlmann/alpine-base:3.24.1
 LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
 
-ARG RUBY_VERSION=4.0.0
-ARG RUBY_SHA=a72bacee9de07283ebc19baa4ac243b193129f21aa4e168c7186fb1fe7d07fe1
+ARG RUBY_VERSION=4.0.1
+ARG RUBY_SHA=0531fe57dfdb56bf591620d2450642ea0e0964f3512a6ebee7dc9305de69395f
 
 ENV LANG=C.UTF-8
 ENV IRBRC=/usr/local/etc/irbrc
