@@ -14,6 +14,8 @@ ENV IRBRC=/usr/local/etc/irbrc
 COPY lib/templates/gemrc.tt /usr/local/etc/gemrc
 COPY lib/templates/irbrc.tt /usr/local/etc/irbrc
 
+SHELL ["/bin/bash", "-o", "errexit", "-o", "nounset", "-o", "pipefail", "-c"]
+
 RUN apk add --no-cache \
             g++ \
             gcc \
@@ -37,12 +39,6 @@ RUN apk add --no-cache \
 # - https://bugs.ruby-lang.org/issues/14387#note-13 (patch source)
 # - https://bugs.ruby-lang.org/issues/14387#note-16 (breaks glibc which doesn't matter here)
 RUN <<STEPS
-  # Defaults
-  set -o nounset
-  set -o errexit
-  set -o pipefail
-  IFS=$'\n\t'
-
   # Setup
   apk add --no-cache \
           --virtual .ruby-build-dependencies \
@@ -80,7 +76,7 @@ RUN <<STEPS
 
   if [ -n "$rustArch" ]; then
     mkdir -p /tmp/rust
-    wget -O /tmp/rust/rustup-init "$rustupUrl"
+    wget --quiet -O /tmp/rust/rustup-init "$rustupUrl"
     echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict
     chmod +x /tmp/rust/rustup-init
     export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'
@@ -91,7 +87,7 @@ RUN <<STEPS
   fi;
 
   # Download
-  wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz"
+  wget --quiet -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz"
   echo "$RUBY_SHA *ruby.tar.xz" | sha256sum --check --strict
   mkdir -p /usr/src/ruby
   tar -xJf ruby.tar.xz --directory /usr/src/ruby --strip-components=1
@@ -99,7 +95,7 @@ RUN <<STEPS
 
   # Patch
   cd /usr/src/ruby
-  wget -O 'thread-stack-fix.patch' 'https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch'
+  wget --quiet -O 'thread-stack-fix.patch' 'https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch'
   echo '3ab628a51d92fdf0d2b5835e93564857aea73e0c1de00313864a94a6255cb645 *thread-stack-fix.patch' | sha256sum --check --strict
   patch -p1 -i thread-stack-fix.patch
   rm thread-stack-fix.patch
