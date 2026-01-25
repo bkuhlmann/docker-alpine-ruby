@@ -7,6 +7,12 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Haskell Dockerfile Linter Install
+          command: |
+            wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+            chmod +x /usr/local/bin/hadolint
+
       - restore_cache:
           name: Gems Restore
           keys:
