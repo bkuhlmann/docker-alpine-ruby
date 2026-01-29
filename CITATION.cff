@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: Please use the following metadata when citing this project in your work.
 title: Docker Alpine Ruby
 abstract: A Ruby focused Docker image with current tooling for development purposes.
-version: 5.1.0
+version: 5.2.0
 license: Hippocratic-2.1
-date-released: 2026-01-13
+date-released: 2026-01-28
 authors:
   - family-names: Kuhlmann
     given-names: Brooke
