@@ -7,6 +7,8 @@ LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
 
 ARG RUBY_VERSION=4.0.5
 ARG RUBY_SHA=5dc5521ea54c726e6cc10b1b5a0f4004b27b482e61c04c99aed79315e30895e5
+ARG RUSTUP_VERISON=1.29.0
+ARG RUST_TOOLCHAIN_VERSION=1.91.1
 
 ENV LANG=C.UTF-8
 ENV IRBRC=/usr/local/etc/irbrc
@@ -31,15 +33,8 @@ RUN apk add --no-cache \
             yaml-dev \
             yaml
 
-# Dependencies:
-# - https://bugs.ruby-lang.org/issues/11869
-# - https://github.com/docker-library/ruby/issues/75
-# Thread Patch:
-# - https://github.com/docker-library/ruby/issues/196
-# - https://bugs.ruby-lang.org/issues/14387#note-13 (patch source)
-# - https://bugs.ruby-lang.org/issues/14387#note-16 (breaks glibc which doesn't matter here)
 RUN <<STEPS
-  # Setup
+  # Install
   apk add --no-cache \
           --virtual .ruby-build-dependencies \
           autoconf \
@@ -47,22 +42,18 @@ RUN <<STEPS
           bzip2-dev \
           coreutils \
           dpkg-dev dpkg \
-          gcc \
           gdbm-dev \
           glib-dev \
-          libc-dev \
-          libffi-dev \
           libxml2-dev \
           libxslt-dev \
           linux-headers \
-          make \
           ncurses-dev \
           openssl-dev \
           patch \
           procps \
           ruby \
           rust \
-          tar \
+          wget \
           xz \
           zlib-dev
 
@@ -70,18 +61,30 @@ RUN <<STEPS
   rustArch=
   apkArch="$(apk --print-arch)"
   case "$apkArch" in
-    'x86_64') rustArch='x86_64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/x86_64-unknown-linux-musl/rustup-init'; rustupSha256='7aa9e2a380a9958fc1fc426a3323209b2c86181c6816640979580f62ff7d48d4';;
-    'aarch64') rustArch='aarch64-unknown-linux-musl'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.26.0/aarch64-unknown-linux-musl/rustup-init'; rustupSha256='b1962dfc18e1fd47d01341e6897cace67cddfabf547ef394e8883939bd6e002e';;
+    'x86_64')
+      rustArch="x86_64-unknown-linux-musl"
+      rustupUrl="https://static.rust-lang.org/rustup/archive/$RUSTUP_VERISON/x86_64-unknown-linux-musl/rustup-init"
+      ;;
+    'aarch64')
+      rustArch="aarch64-unknown-linux-musl"
+      rustupUrl="https://static.rust-lang.org/rustup/archive/$RUSTUP_VERISON/aarch64-unknown-linux-musl/rustup-init"
+      ;;
   esac;
 
   if [ -n "$rustArch" ]; then
     mkdir -p /tmp/rust
     wget --quiet -O /tmp/rust/rustup-init "$rustupUrl"
-    echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict
+    wget --quiet -O /tmp/rust/rustup-init.sha256 "${rustupUrl}.sha256"
+    echo "$(awk '{print $1}' /tmp/rust/rustup-init.sha256) /tmp/rust/rustup-init" \
+         | sha256sum --check --strict
     chmod +x /tmp/rust/rustup-init
-    export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'
+    export RUSTUP_HOME="/tmp/rust/rustup" CARGO_HOME="/tmp/rust/cargo"
     export PATH="$CARGO_HOME/bin:$PATH"
-    /tmp/rust/rustup-init -y --no-modify-path --profile minimal --default-toolchain '1.74.1' --default-host "$rustArch"
+    /tmp/rust/rustup-init -y \
+                          --no-modify-path \
+                          --profile minimal \
+                          --default-toolchain "$RUST_TOOLCHAIN_VERSION" \
+                          --default-host "$rustArch"
     rustc --version
     cargo --version
   fi;
@@ -93,27 +96,23 @@ RUN <<STEPS
   tar -xJf ruby.tar.xz --directory /usr/src/ruby --strip-components=1
   rm ruby.tar.xz
 
-  # Patch
+  # Thread Patch
+  # - https://github.com/docker-library/ruby/issues/196
+  # - https://bugs.ruby-lang.org/issues/14387#note-13 (patch source)
+  # - https://bugs.ruby-lang.org/issues/14387#note-16 (breaks glibc which doesn't matter here)
   cd /usr/src/ruby
-  wget --quiet -O 'thread-stack-fix.patch' 'https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch'
+  wget --quiet -O "thread-stack-fix.patch" "https://bugs.ruby-lang.org/attachments/download/7081/0001-thread_pthread.c-make-get_main_stack-portable-on-lin.patch"
   echo '3ab628a51d92fdf0d2b5835e93564857aea73e0c1de00313864a94a6255cb645 *thread-stack-fix.patch' | sha256sum --check --strict
   patch -p1 -i thread-stack-fix.patch
   rm thread-stack-fix.patch
 
-  # Fix: "ENABLE_PATH_CHECK" is disabled to suppress warning: Insecure world writable dir
-  echo '#define ENABLE_PATH_CHECK 0' > file.c.new
-  echo >> file.c.new
-  cat file.c >> file.c.new
-  mv file.c.new file.c
-
   autoconf
   gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
 
-  # Fix: The configure script does not detect isnan/isinf as macros.
-  export ac_cv_func_isnan=yes ac_cv_func_isinf=yes
-
   # Build
-  ./configure --build="$gnuArch" --disable-install-doc --enable-shared ${rustArch:+--enable-yjit}
+  ./configure --build="$gnuArch" \
+              --disable-install-doc \
+              --enable-shared ${rustArch:+--enable-yjit} ${rustArch:+--enable-zjit}
   make --jobs="$(nproc)"
   make install
   rm -rf /tmp/rust
@@ -152,7 +151,7 @@ ENV PATH="$GEM_HOME/bin:$PATH"
 ENV RUBYOPT="-W:deprecated -W:performance -W:strict_unused_block --yjit --debug-frozen-string-literal"
 ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
-RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
+RUN mkdir -p "$GEM_HOME" && chmod 1777 "$GEM_HOME"
 RUN gem update --system
 
 WORKDIR /usr/src/app
