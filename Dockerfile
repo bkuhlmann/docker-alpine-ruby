@@ -1,14 +1,12 @@
 # syntax = docker/dockerfile:1.4
 
-FROM bkuhlmann/alpine-base:4.3.1
+FROM bkuhlmann/alpine-base:4.4.0
 
 LABEL description="Alchemists Alpine Ruby"
 LABEL maintainer="Brooke Kuhlmann <brooke@alchemists.io>"
 
 ARG RUBY_VERSION=4.0.5
 ARG RUBY_SHA=5dc5521ea54c726e6cc10b1b5a0f4004b27b482e61c04c99aed79315e30895e5
-ARG RUSTUP_VERISON=1.29.0
-ARG RUST_TOOLCHAIN_VERSION=1.91.1
 
 ENV LANG=C.UTF-8
 ENV IRBRC=/usr/local/etc/irbrc
@@ -20,7 +18,6 @@ SHELL ["/bin/bash", "-o", "errexit", "-o", "nounset", "-o", "pipefail", "-c"]
 
 RUN apk add --no-cache \
             g++ \
-            gcc \
             gmp-dev \
             libc-dev \
             libffi-dev \
@@ -36,7 +33,7 @@ RUN apk add --no-cache \
 RUN <<STEPS
   # Install
   apk add --no-cache \
-          --virtual .ruby-build-dependencies \
+          --virtual .build-dependencies \
           autoconf \
           bzip2 \
           bzip2-dev \
@@ -56,38 +53,6 @@ RUN <<STEPS
           wget \
           xz \
           zlib-dev
-
-  # Rust
-  rustArch=
-  apkArch="$(apk --print-arch)"
-  case "$apkArch" in
-    'x86_64')
-      rustArch="x86_64-unknown-linux-musl"
-      rustupUrl="https://static.rust-lang.org/rustup/archive/$RUSTUP_VERISON/x86_64-unknown-linux-musl/rustup-init"
-      ;;
-    'aarch64')
-      rustArch="aarch64-unknown-linux-musl"
-      rustupUrl="https://static.rust-lang.org/rustup/archive/$RUSTUP_VERISON/aarch64-unknown-linux-musl/rustup-init"
-      ;;
-  esac;
-
-  if [ -n "$rustArch" ]; then
-    mkdir -p /tmp/rust
-    wget --quiet -O /tmp/rust/rustup-init "$rustupUrl"
-    wget --quiet -O /tmp/rust/rustup-init.sha256 "${rustupUrl}.sha256"
-    echo "$(awk '{print $1}' /tmp/rust/rustup-init.sha256) /tmp/rust/rustup-init" \
-         | sha256sum --check --strict
-    chmod +x /tmp/rust/rustup-init
-    export RUSTUP_HOME="/tmp/rust/rustup" CARGO_HOME="/tmp/rust/cargo"
-    export PATH="$CARGO_HOME/bin:$PATH"
-    /tmp/rust/rustup-init -y \
-                          --no-modify-path \
-                          --profile minimal \
-                          --default-toolchain "$RUST_TOOLCHAIN_VERSION" \
-                          --default-host "$rustArch"
-    rustc --version
-    cargo --version
-  fi;
 
   # Download
   wget --quiet -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION::-2}/ruby-$RUBY_VERSION.tar.xz"
@@ -125,7 +90,7 @@ RUN <<STEPS
   apk add --no-network \
           --virtual .ruby-run-dependencies \
           $runDeps
-  apk del --no-network .ruby-build-dependencies
+  apk del --no-network .build-dependencies
 
   # Clean
   cd /
