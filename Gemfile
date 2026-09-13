@@ -4,7 +4,7 @@ ruby file: ".ruby-version"
 
 source "https://rubygems.org"
 
-gem "caliber", "~> 0.90"
+gem "caliber", "~> 0.97"
 gem "debug", "~> 1.11"
 gem "git-lint", "~> 11.0"
 gem "milestoner", "~> 22.0"
